@@ -56,6 +56,8 @@ body {
 				display: inline-block;
 				@include border-bottom-radius(4px);
 				vertical-align: top;
+				-webkit-box-shadow: 3px 3px 3px 0 rgba(0,0,0,.3);
+				box-shadow: 3px 3px 3px 0 rgba(0,0,0,.3);
 
 				@include media-breakpoint-down(sm) {
 					display: none;
@@ -93,12 +95,11 @@ body {
 	}
 
 	#page-content-footer {
-		min-height: 100px;
-		@extend .clearfix;
 		@include gradient-y(#053563, theme-color("primary"));
 		color: #fff;
-		padding: 0 $spacer-x / 2 $spacer-y / 2 $spacer-x / 2;
+		padding: $spacer-y $spacer-x;
 		font-size: 10px;
+		text-align: right;
 
 		a {
 			color: #fff;
@@ -140,6 +141,29 @@ body {
 	}
 }
 
+.btn-leaf {
+	background-color: theme-color("secondary");
+	background-image: url('/media/images/leaf-overlay.png');
+	background-position: top right;
+	background-repeat: no-repeat;
+	color: #fff;
+
+	&[type="submit"]{
+		font-weight: bold;
+		border-radius: 0;
+		text-align: center;
+		min-width: 140px;
+		text-transform: uppercase;
+		font-size: $font-size-sm;
+	}
+
+	&:hover {
+		background-color: darken(theme-color("secondary"), 8%);
+		color: #fff;
+		text-shadow: 2px 2px 2px #4D4D4D;
+	}
+}
+
 h1 {
 	display: block;
 	margin: 0px;
@@ -174,6 +198,7 @@ h1 {
 
 	&:first-of-type {
 		padding-top: 0px;
+		margin-top: -8px;
 	}
 
 	&:last-of-type {
@@ -187,31 +212,112 @@ h1 {
 	img {
 		float: left;
 		margin-right: $spacer-x / 2;
+		width: 200px;
+		height: 120px;
+		margin-top: 8px;
+
+		@include media-breakpoint-down(xs) {
+			float: none;
+			display: block;
+		}
 	}
 
 	.btn {
 		float: right;
 
 		&.btn-leaf {
-			background-color: theme-color("secondary");
-			background-image: url('/media/images/leaf-overlay.png');
-			background-position: top right;
-			background-repeat: no-repeat;
-			color: #fff;
 			font-weight: bold;
 			border-radius: 0;
 			text-align: center;
 			min-width: 140px;
 			text-transform: uppercase;
 			font-size: $font-size-sm;
+		}
+	}
+}
 
-			&:hover {
-				background-color: darken(theme-color("secondary"), 8%);
-			}
+.blog-full {
+
+	h5 {
+		margin: 4px 0px;
+		border-bottom: 1px solid #ccc;
+		padding-bottom: $spacer-y / 2;
+		margin-bottom: $spacer-y;
+	}
+	
+	img {
+		float: left;
+		margin-right: $spacer-x;
+		width: 400px;
+		height: 240px;
+		margin-top: 8px;
+
+		@include media-breakpoint-down(xs) {
+			float: none;
+			display: block;
+		}
+
+		@include media-breakpoint-down(sm) {
+			width: 200px;
+			height: 120px;
+		}
+	}
+
+	.btn {
+
+		&.btn-leaf {
+			font-weight: bold;
+			border-radius: 0;
+			text-align: center;
+			min-width: 140px;
+			font-size: $font-size-sm;
 		}
 	}
 }
 
 .datepicker {
 	font-size: $font-size-sm;
+}
+
+.hero-image {
+	height: 200px;
+	background-size: cover;
+	background-position: right;
+	margin-bottom: $spacer-y;
+
+	&.hero-image-lg {
+		height: 300px;
+	}
+}
+
+.image-grid {
+	text-align: center;
+
+	img {
+		max-width: 220px;
+		width: 100%;
+		margin: $spacer-y / 2 $spacer-x / 2;
+	}
+}
+
+.callout {
+	@include gradient-y(#053563, theme-color("primary"));
+	padding: $spacer-y $spacer-x;
+	text-align: center;
+	color: #fff;
+
+	h5 {
+		display: inline;
+	}
+
+	.btn {
+		margin: 8px auto;
+	}
+}
+
+p {
+	& > img {
+		float: left;
+		margin: 6px $spacer-x 0 0;
+	}
 }
