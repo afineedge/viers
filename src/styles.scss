@@ -10,6 +10,22 @@ body {
 	background-position: bottom;
 	background-size: 100%;
 	background-repeat: no-repeat;
+
+	a[href^='mailto'],
+	a[href^='tel'] {
+		color: inherit;
+	}
+}
+
+h1, h2, h3, h4, h5, h6 {
+
+	&.underline {
+		display: inline-block;
+		line-height: 2;
+		border-bottom: 1px solid theme-color("secondary");
+		color: theme-color("primary");
+		text-transform: uppercase;
+	}
 }
 
 #wrapper {
@@ -286,7 +302,41 @@ h1 {
 	margin-bottom: $spacer-y;
 
 	&.hero-image-lg {
-		height: 300px;
+		height: 340px;
+
+		@include media-breakpoint-down(sm) {
+			height: 200px;
+		}
+	}
+
+	&.hero-image-captioned {
+		position: relative;
+
+		@include media-breakpoint-down(sm) {
+			padding-top: 40px;
+			background-position: bottom right;
+		}
+
+		.hero-image-caption {
+			background-color: rgba(255, 255, 255, .6);
+			padding: $spacer-y $spacer-x;
+			position: absolute;
+			bottom: $spacer-y / 2;
+			left: 0;
+			right: 0;
+
+			@include media-breakpoint-down(sm) {
+				font-size: 12px;
+
+				h6 {
+					font-size: 12px;
+				}
+			}
+
+			h6 {
+				margin: 0px 0px 4px 0px;
+			}
+		}
 	}
 }
 
@@ -312,6 +362,13 @@ h1 {
 
 	.btn {
 		margin: 8px auto;
+		max-width: 300px;
+	}
+
+	.vertical-center {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 }
 
@@ -319,5 +376,40 @@ p {
 	& > img {
 		float: left;
 		margin: 6px $spacer-x 0 0;
+	}
+}
+
+.caption-box {
+	@extend .clearfix;
+	margin: 0 auto $spacer-y;
+	max-width: 260px;
+	height: 300px;
+	display: flex;
+	flex-direction: column;
+
+	@include media-breakpoint-down(sm) {
+		height: 320px;
+	}
+
+	@include media-breakpoint-down(md) {
+		height: 240px;
+	}
+	
+	.caption {
+		padding: $spacer-x / 2 $spacer-y / 2;
+		@include gradient-y(#053563, theme-color("primary"));
+		color: #fff;
+	}
+
+	.caption-image {
+		flex: 1;
+		margin-bottom: $spacer-y;
+		background-size: cover;
+		background-position: center;
+	}
+
+	.btn {
+	    margin-left: auto;
+	    min-width: 100px;
 	}
 }

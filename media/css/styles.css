@@ -5222,7 +5222,7 @@ a.bg-dark:hover {
   border-radius: 0;
 }
 
-.clearfix::after, #page-header::after, .blog-entry::after {
+.clearfix::after, #page-header::after, .blog-entry::after, .caption-box::after {
   display: block;
   clear: both;
   content: "";
@@ -7869,6 +7869,19 @@ body {
   background-repeat: no-repeat;
 }
 
+body a[href^='mailto'],
+body a[href^='tel'] {
+  color: inherit;
+}
+
+h1.underline, h2.underline, h3.underline, h4.underline, h5.underline, h6.underline {
+  display: inline-block;
+  line-height: 2;
+  border-bottom: 1px solid #B1B51F;
+  color: #06427B;
+  text-transform: uppercase;
+}
+
 #wrapper {
   display: flex;
   flex-direction: column;
@@ -8150,7 +8163,46 @@ h1 {
 }
 
 .hero-image.hero-image-lg {
-  height: 300px;
+  height: 340px;
+}
+
+@media (max-width: 767px) {
+  .hero-image.hero-image-lg {
+    height: 200px;
+  }
+}
+
+.hero-image.hero-image-captioned {
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  .hero-image.hero-image-captioned {
+    padding-top: 40px;
+    background-position: bottom right;
+  }
+}
+
+.hero-image.hero-image-captioned .hero-image-caption {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 15px 15px;
+  position: absolute;
+  bottom: 7.5px;
+  left: 0;
+  right: 0;
+}
+
+@media (max-width: 767px) {
+  .hero-image.hero-image-captioned .hero-image-caption {
+    font-size: 12px;
+  }
+  .hero-image.hero-image-captioned .hero-image-caption h6 {
+    font-size: 12px;
+  }
+}
+
+.hero-image.hero-image-captioned .hero-image-caption h6 {
+  margin: 0px 0px 4px 0px;
 }
 
 .image-grid {
@@ -8177,9 +8229,55 @@ h1 {
 
 .callout .btn {
   margin: 8px auto;
+  max-width: 300px;
+}
+
+.callout .vertical-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 p > img {
   float: left;
   margin: 6px 15px 0 0;
+}
+
+.caption-box {
+  margin: 0 auto 15px;
+  max-width: 260px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 767px) {
+  .caption-box {
+    height: 320px;
+  }
+}
+
+@media (max-width: 991px) {
+  .caption-box {
+    height: 240px;
+  }
+}
+
+.caption-box .caption {
+  padding: 7.5px 7.5px;
+  background-image: linear-gradient(to bottom, #053563 0%, #06427B 100%);
+  background-repeat: repeat-x;
+  color: #fff;
+}
+
+.caption-box .caption-image {
+  flex: 1;
+  margin-bottom: 15px;
+  background-size: cover;
+  background-position: center;
+}
+
+.caption-box .btn {
+  margin-left: auto;
+  min-width: 100px;
 }
