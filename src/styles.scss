@@ -168,7 +168,6 @@ h1, h2, h3, h4, h5, h6 {
 		font-weight: bold;
 		border-radius: 0;
 		text-align: center;
-		min-width: 140px;
 		text-transform: uppercase;
 		font-size: $font-size-sm;
 	}
@@ -250,6 +249,11 @@ h1 {
 			font-size: $font-size-sm;
 		}
 	}
+
+	p {
+		font-size: $font-size-sm;
+		margin: 0px;
+	}
 }
 
 .blog-full {
@@ -289,6 +293,10 @@ h1 {
 			font-size: $font-size-sm;
 		}
 	}
+
+	p {
+		font-size: $font-size-sm;
+	}
 }
 
 .datepicker {
@@ -318,7 +326,7 @@ h1 {
 		}
 
 		.hero-image-caption {
-			background-color: rgba(255, 255, 255, .6);
+			background-color: rgba(255, 255, 255, .8);
 			padding: $spacer-y $spacer-x;
 			position: absolute;
 			bottom: $spacer-y / 2;

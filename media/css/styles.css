@@ -8029,7 +8029,6 @@ h1.underline, h2.underline, h3.underline, h4.underline, h5.underline, h6.underli
   font-weight: bold;
   border-radius: 0;
   text-align: center;
-  min-width: 140px;
   text-transform: uppercase;
   font-size: 0.875rem;
 }
@@ -8114,6 +8113,11 @@ h1 {
   font-size: 0.875rem;
 }
 
+.blog-entry p {
+  font-size: 0.875rem;
+  margin: 0px;
+}
+
 .blog-full h5 {
   margin: 4px 0px;
   border-bottom: 1px solid #ccc;
@@ -8151,6 +8155,10 @@ h1 {
   font-size: 0.875rem;
 }
 
+.blog-full p {
+  font-size: 0.875rem;
+}
+
 .datepicker {
   font-size: 0.875rem;
 }
@@ -8184,7 +8192,7 @@ h1 {
 }
 
 .hero-image.hero-image-captioned .hero-image-caption {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.8);
   padding: 15px 15px;
   position: absolute;
   bottom: 7.5px;
