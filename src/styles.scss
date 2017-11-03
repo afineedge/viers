@@ -11,6 +11,10 @@ body {
 	background-size: 100%;
 	background-repeat: no-repeat;
 
+	a {
+		color: theme-color("secondary");
+	}
+
 	a[href^='mailto'],
 	a[href^='tel'] {
 		color: inherit;

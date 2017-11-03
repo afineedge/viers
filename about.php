@@ -2,38 +2,27 @@
 <?php
 	include $_SERVER['DOCUMENT_ROOT'] . '/includes/tools.php';
 
-	// load record from 'blog_homepage'
-	list($blog_homepageRecords, $blog_homepageMetaData) = getRecords(array(
-		'tableName'   => 'blog_homepage',
+	// load record from 'about_page'
+	list($about_pageRecords, $about_pageMetaData) = getRecords(array(
+		'tableName'   => 'about_page',
 		'where'       => '', // load first record
 		'loadUploads' => true,
 		'allowSearch' => false,
 		'limit'       => '1',
 	));
-	$blog_homepageRecord = @$blog_homepageRecords[0]; // get first record
-	if (!$blog_homepageRecord) { dieWith404("Record not found!"); } // show error message if no record found
+	$about_pageRecord = @$about_pageRecords[0]; // get first record
+	if (!$about_pageRecord) { dieWith404("Record not found!"); } // show error message if no record found
 
-	// load record from 'blog_entries'
-	list($blog_entriesRecords, $blog_entriesMetaData) = getRecords(array(
-		'tableName'   => 'blog_entries',
-		'where'       => whereRecordNumberInUrl(0),
+	  // load record from 'map_bar'
+	list($map_barRecords, $map_barMetaData) = getRecords(array(
+		'tableName'   => 'map_bar',
+		'where'       => '', // load first record
 		'loadUploads' => true,
 		'allowSearch' => false,
 		'limit'       => '1',
 	));
-	$blog_entriesRecord = @$blog_entriesRecords[0]; // get first record
-	if (!$blog_entriesRecord) { dieWith404("Record not found!"); } // show error message if no record found
-
-	// load record from 'organizations'
-	list($organizationsRecords, $organizationsMetaData) = getRecords(array(
-		'tableName'   => 'organizations',
-		'where'       => "`num` = '" + $blog_entriesRecord['organization'] + "'",
-		'loadUploads' => true,
-		'allowSearch' => false,
-		'limit'       => '1',
-	));
-	$organizationsRecord = @$organizationsRecords[0]; // get first record
-	if (!$organizationsRecord) { dieWith404("Record not found!"); } // show error message if no record found
+	$map_barRecord = @$map_barRecords[0]; // get first record
+	if (!$map_barRecord) { dieWith404("Record not found!"); } // show error message if no record found
 
 ?>
 <!DOCTYPE HTML>
@@ -100,10 +89,10 @@
 					<a href="/" class="btn btn-primary">
 						Home
 					</a>
-					<a href="blog.php" class="btn btn-primary active">
+					<a href="blog.php" class="btn btn-primary">
 						Blog
 					</a>
-					<a href="about.php" class="btn btn-primary">
+					<a href="about.php" class="btn btn-primary active">
 						About
 					</a>
 					<a href="contact.php" class="btn btn-primary">
@@ -113,17 +102,25 @@
 						Donate
 					</a>
 				</div>
-				<h1><?php echo htmlencode($blog_homepageRecord['title']) ?></h1>
+				<h1><?php echo htmlencode($about_pageRecord['title']) ?></h1>
 				<div class="container content p-3">
-					<div class="blog-full px-3">
-						<small><strong><?php echo date("F j, Y", strtotime($blog_entriesRecord['publishDate'])); ?> | <a href="<?php echo htmlencode($organizationsRecord['organization_url']) ?>" target="_blank"><?php echo $organizationsRecord['organization_name'] ?></a></strong></small>
-						<h5><?php echo htmlencode($blog_entriesRecord['title']) ?></h5>
-						<?php foreach ($blog_entriesRecord['main_photo'] as $index => $upload): ?>
-							<img src="<?php echo htmlencode($upload['urlPath']) ?>" />
-						<?php endforeach ?>
-						<?php echo $blog_entriesRecord['content']; ?>
-						<a href="<?php echo $blog_entriesMetaData['_listPage'] ?>" class="btn btn-leaf btn-sm mt-3"><i class="fa fa-caret-left"></i> Return to Archive</a>
+					<?php foreach ($about_pageRecord['main_image'] as $index => $upload): ?>
+						<div class="hero-image hero-image-lg" style="background-image: url('<?php echo htmlencode($upload['urlPath']) ?>');">
+						</div>
+					<?php endforeach; ?>
+					<?php echo $about_pageRecord['content_1']; ?>
+					<div class="image-grid row pb-3">
+						<?php foreach ($about_pageRecord['image_grid'] as $index => $upload): ?>
+							<div class="col-xs-6 col-sm-4">
+								<img src="<?php echo htmlencode($upload['urlPath']) ?>" />
+							</div>
+						<?php endforeach; ?>
 					</div>
+					<?php echo $about_pageRecord['content_2']; ?>
+				</div>
+				<?php include $_SERVER['DOCUMENT_ROOT'] . '/includes/map-bar.php'; ?>
+				<div class="container content p-3">
+					<?php echo $about_pageRecord['content_3']; ?>
 				</div>
 			</div>
 			<div class="container">

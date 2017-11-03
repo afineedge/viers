@@ -2,38 +2,16 @@
 <?php
 	include $_SERVER['DOCUMENT_ROOT'] . '/includes/tools.php';
 
-	// load record from 'blog_homepage'
-	list($blog_homepageRecords, $blog_homepageMetaData) = getRecords(array(
-		'tableName'   => 'blog_homepage',
-		'where'       => '', // load first record
-		'loadUploads' => true,
-		'allowSearch' => false,
-		'limit'       => '1',
-	));
-	$blog_homepageRecord = @$blog_homepageRecords[0]; // get first record
-	if (!$blog_homepageRecord) { dieWith404("Record not found!"); } // show error message if no record found
-
-	// load record from 'blog_entries'
-	list($blog_entriesRecords, $blog_entriesMetaData) = getRecords(array(
-		'tableName'   => 'blog_entries',
+	// load record from 'articles'
+	list($articlesRecords, $articlesMetaData) = getRecords(array(
+		'tableName'   => 'articles',
 		'where'       => whereRecordNumberInUrl(0),
 		'loadUploads' => true,
 		'allowSearch' => false,
 		'limit'       => '1',
 	));
-	$blog_entriesRecord = @$blog_entriesRecords[0]; // get first record
-	if (!$blog_entriesRecord) { dieWith404("Record not found!"); } // show error message if no record found
-
-	// load record from 'organizations'
-	list($organizationsRecords, $organizationsMetaData) = getRecords(array(
-		'tableName'   => 'organizations',
-		'where'       => "`num` = '" + $blog_entriesRecord['organization'] + "'",
-		'loadUploads' => true,
-		'allowSearch' => false,
-		'limit'       => '1',
-	));
-	$organizationsRecord = @$organizationsRecords[0]; // get first record
-	if (!$organizationsRecord) { dieWith404("Record not found!"); } // show error message if no record found
+	$articlesRecord = @$articlesRecords[0]; // get first record
+	if (!$articlesRecord) { dieWith404("Record not found!"); } // show error message if no record found
 
 ?>
 <!DOCTYPE HTML>
@@ -113,16 +91,16 @@
 						Donate
 					</a>
 				</div>
-				<h1><?php echo htmlencode($blog_homepageRecord['title']) ?></h1>
+				<h1>Research Archive</h1>
 				<div class="container content p-3">
 					<div class="blog-full px-3">
-						<small><strong><?php echo date("F j, Y", strtotime($blog_entriesRecord['publishDate'])); ?> | <a href="<?php echo htmlencode($organizationsRecord['organization_url']) ?>" target="_blank"><?php echo $organizationsRecord['organization_name'] ?></a></strong></small>
-						<h5><?php echo htmlencode($blog_entriesRecord['title']) ?></h5>
-						<?php foreach ($blog_entriesRecord['main_photo'] as $index => $upload): ?>
+						<small><strong><?php echo date("F j, Y", strtotime($articlesRecord['publishDate'])); ?> | <?php echo $articlesRecord['author'] ?></strong></small>
+						<h5><?php echo htmlencode($articlesRecord['title']) ?></h5>
+						<?php foreach ($articlesRecord['main_photo'] as $index => $upload): ?>
 							<img src="<?php echo htmlencode($upload['urlPath']) ?>" />
 						<?php endforeach ?>
-						<?php echo $blog_entriesRecord['content']; ?>
-						<a href="<?php echo $blog_entriesMetaData['_listPage'] ?>" class="btn btn-leaf btn-sm mt-3"><i class="fa fa-caret-left"></i> Return to Archive</a>
+						<?php echo $articlesRecord['content']; ?>
+						<a href="<?php echo $articlesMetaData['_listPage'] ?>" class="btn btn-leaf btn-sm mt-3"><i class="fa fa-caret-left"></i> Return to Archive</a>
 					</div>
 				</div>
 			</div>

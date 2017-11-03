@@ -1,3 +1,19 @@
+<?php header('Content-type: text/html; charset=utf-8'); ?>
+<?php
+	include $_SERVER['DOCUMENT_ROOT'] . '/includes/tools.php';
+
+	// load record from 'contact_page'
+	list($contact_pageRecords, $contact_pageMetaData) = getRecords(array(
+		'tableName'   => 'contact_page',
+		'where'       => '', // load first record
+		'loadUploads' => true,
+		'allowSearch' => false,
+		'limit'       => '1',
+	));
+	$contact_pageRecord = @$contact_pageRecords[0]; // get first record
+	if (!$contact_pageRecord) { dieWith404("Record not found!"); } // show error message if no record found
+
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -32,15 +48,15 @@
 			<div class="container">
 				<div class="page-header-right">
 					<div class="page-header-links">
-						<a href="contact.html">
+						<a href="contact.php">
 							Contact
 						</a>
 						 | 
-						<a href="donate.html">
+						<a href="donate.php">
 							Donate
 						</a>
 						 | 
-						<a href="volunteer.html">
+						<a href="volunteer.php">
 							Become a Volunteer
 						</a>
 					</div>
@@ -62,28 +78,27 @@
 					<a href="/" class="btn btn-primary">
 						Home
 					</a>
-					<a href="blog.html" class="btn btn-primary">
+					<a href="blog.php" class="btn btn-primary">
 						Blog
 					</a>
-					<a href="about.html" class="btn btn-primary">
+					<a href="about.php" class="btn btn-primary">
 						About
 					</a>
-					<a href="contact.html" class="btn btn-primary active">
+					<a href="contact.php" class="btn btn-primary active">
 						Contact
 					</a>
 					<a href="#" class="btn btn-primary">
 						Donate
 					</a>
 				</div>
-				<h1>Contact Us</h1>
+				<h1><?php echo htmlencode($contact_pageRecord['title']) ?></h1>
 				<div class="container content p-3">
-					<div class="hero-image" style="background-image: url('/media/images/island-panorama.jpg');">
-					</div>
-					<p>
-						Looking for more information on island activities? Questions about staying at VIERS, rates, or availability? Use our contact form below and someone from VIERS will be in touch as soon as possible.<br /><br />
-
-						<small>* Required fields</small>
-					</p>
+					<?php foreach ($contact_pageRecord['main_image'] as $index => $upload): ?>
+						<div class="hero-image" style="background-image: url('<?php echo htmlencode($upload['urlPath']) ?>');">
+						</div>
+					<?php endforeach; ?>
+					<?php echo $contact_pageRecord['content']; ?>
+					<small>* Required fields</small>
 					<form class="pb-1">
 						<div class="row">
 							<div class="col-xs-12 col-sm-6">
@@ -122,37 +137,12 @@
 						<button type="submit" class="btn btn-leaf">Submit</button>
 					</form>
 					<hr />
-					<div class="row">
-						<div class="col-xs-12 col-md-6 pb-3">
-							<h5>Contact Us On Site</h5>
-							Whitney Sears<br/ >
-							VIERS Manager, St. John Office<br/ >
-							<a href="mailto:sears.whitney@gmail.com?subject=VIERS">sears.whitney@gmail.com</a><br/>
-							<a href="tel:3407766721">(340) 776-6721</a><br /><br/>
-
-							<strong>Mailing Address:</strong><br />
-							VIERS<br />
-							P.O. Box 250<br/>
-							St. John VI 00831
-						</div>
-						<div class="col-xs-12 col-md-6">
-							<h5>Contact Us Stateside</h5>
-							Tricia Hopkins<br/>
-							VIERS Administrator<br/>
-							<a href="mailto:TriciaHopkins@islands.org?subject=VIERS">TriciaHopkins@islands.org</a><br/>
-							<a href="tel:4437587619">(443) 758-7619</a><br /><br/>
-							
-							<strong>Mailing Address:</strong><br />
-							VIERS<br />
-							8219 Elvaton Drive<br/ >
-							Pasadena, Maryland 21122
-						</div>
-					</div>
+					<?php include $_SERVER['DOCUMENT_ROOT'] . '/includes/contact-information.php'; ?>
 				</div>
 			</div>
 			<div class="container">
 				<div id="page-content-footer">
-					VIERS &copy;2017
+					VIERS &copy;<?php echo date("Y"); ?>
 				</div>
 			</div>
 		</div>

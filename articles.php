@@ -9,24 +9,12 @@
 		$publishDate_max = $_REQUEST['publishDate_max'];
 		$_REQUEST['publishDate_max'] = date("Y-m-d", strtotime(@$_REQUEST['publishDate_max']));
 	}
-
+	
 	include $_SERVER['DOCUMENT_ROOT'] . '/includes/tools.php';
 
-	// load record from 'blog_homepage'
-	list($blog_homepageRecords, $blog_homepageMetaData) = getRecords(array(
-		'tableName'   => 'blog_homepage',
-		'where'       => '', // load first record
-		'loadUploads' => true,
-		'allowSearch' => false,
-		'limit'       => '1',
-	));
-	$blog_homepageRecord = @$blog_homepageRecords[0]; // get first record
-	if (!$blog_homepageRecord) { dieWith404("Record not found!"); } // show error message if no record found
-
-
-	// load records from 'blog_entries'
-	list($blog_entriesRecords, $blog_entriesMetaData) = getRecords(array(
-		'tableName'   => 'blog_entries',
+	// load records from 'articles'
+	list($articlesRecords, $articlesMetaData) = getRecords(array(
+		'tableName'   => 'articles',
 		'perPage'     => '5',
 		'loadUploads' => true,
 		'allowSearch' => true
@@ -117,7 +105,7 @@
 						Donate
 					</a>
 				</div>
-				<h1><?php echo htmlencode($blog_homepageRecord['title']) ?></h1>
+				<h1>Research Archive</h1>
 				<div class="container content p-3">
 					<div class="row">
 						<div class="col-xs-12 col-md-5 col-lg-3">
@@ -131,15 +119,6 @@
 							</form>
 							<form action="?" method="POST">
 								<div class="text-center mt-3">Filter Articles</div>
-								<div class="form-group">
-									<small><label for="exampleInputEmail1">Organization</label></small>
-									<select class="form-control form-control-sm" name="organization">
-										<option value=""></option>
-										<?php foreach ($organizationsRecords as $organization): ?>
-											<option value="<?php echo $organization['num'] ?>" <?php if (@$_REQUEST['organization'] == $organization['num']) {echo 'selected';} ?>><?php echo $organization['organization_name'] ?></option>
-										<?php endforeach ?>
-									</select>
-								</div>
 								<div class="form-group">
 									<small><label for="exampleInputPassword1">Date Published</label></small>
 									<div class="input-group input-group-sm">
@@ -162,16 +141,10 @@
 							</form>
 						</div>
 						<div class="col-xs-12 col-md-7 col-lg-9">
-							<?php foreach ($blog_entriesRecords as $record): ?>
-								<?php foreach ($organizationsRecords as $organization): ?>
-									<?php if ($organization['num'] == $record['organization']){
-										$record['organization'] = $organization;
-										break;
-									} ?>
-								<?php endforeach ?>
+							<?php foreach ($articlesRecords as $record): ?>
 								<div class="blog-entry">
 									<img src="http://placehold.it/200x120/" />
-									<small><strong><?php echo date("F j, Y", strtotime($record['publishDate'])); ?><?php if($record['organization'] && $record['organization']['organization_url']){?> | <a href="<?php echo htmlencode($record['organization']['organization_url']) ?>" target="_blank"><?php echo $record['organization']['organization_name'] ?></a><?php } ?></strong></small>
+									<small><strong><?php echo date("F j, Y", strtotime($record['publishDate'])); ?><?php echo $record['author'] ?></strong></small>
 									<h5><?php echo htmlencode($record['title']) ?></h5>
 									<?php echo $record['abbreviated_content']; ?>
 									<a href="<?php echo $record['_link'] ?>" class="btn btn-leaf btn-sm mt-2">Read More <i class="fa fa-caret-right"></i></a>
@@ -180,9 +153,9 @@
 							<nav>
 								<ul class="pagination pagination-sm justify-content-center">
 
-									<?php if ($blog_entriesMetaData['prevPage']): ?>
+									<?php if ($articlesMetaData['prevPage']): ?>
 										<li class="page-item">
-											<a class="page-link" href="<?php echo $blog_entriesMetaData['prevPageLink'] ?>" aria-label="Previous">
+											<a class="page-link" href="<?php echo $articlesMetaData['prevPageLink'] ?>" aria-label="Previous">
 												<span aria-hidden="true">&laquo;</span>
 												<span class="sr-only">Previous</span>
 											</a>
@@ -196,11 +169,11 @@
 										</li>
 									<?php endif ?>
 
-									<li class="page-item disabled"><a class="page-link" href="#">Page <?php echo $blog_entriesMetaData['page'] ?> of <?php echo $blog_entriesMetaData['totalPages'] ?></a></li>
+									<li class="page-item disabled"><a class="page-link" href="#">Page <?php echo $articlesMetaData['page'] ?> of <?php echo $articlesMetaData['totalPages'] ?></a></li>
 
-									<?php if ($blog_entriesMetaData['nextPage']): ?>
+									<?php if ($articlesMetaData['nextPage']): ?>
 										<li class="page-item">
-											<a class="page-link" href="<?php echo $blog_entriesMetaData['nextPageLink'] ?>" aria-label="Next">
+											<a class="page-link" href="<?php echo $articlesMetaData['nextPageLink'] ?>" aria-label="Next">
 												<span aria-hidden="true">&raquo;</span>
 												<span class="sr-only">Next</span>
 											</a>

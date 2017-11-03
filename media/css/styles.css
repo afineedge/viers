@@ -7869,6 +7869,10 @@ body {
   background-repeat: no-repeat;
 }
 
+body a {
+  color: #B1B51F;
+}
+
 body a[href^='mailto'],
 body a[href^='tel'] {
   color: inherit;
